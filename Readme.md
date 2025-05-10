@@ -45,7 +45,8 @@ flask run
 
 # Ekran Görüntüleri
 
-<img alt="Ana Sayfa" src="/TODO-APP-Flask-Orm-SqlAlcahemy-/assets/anaSayfa.png">
+![Ana Sayfa](assets/anaSayfa.png)
+
 
 Katkıda Bulunma
 Katkıda bulunmak isterseniz, lütfen bir pull request gönderin veya bir issue açın.
