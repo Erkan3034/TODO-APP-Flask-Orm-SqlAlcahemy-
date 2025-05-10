@@ -14,10 +14,12 @@
 
 
     <div class="container">
-        <h1 class="mt-5">To-Do List</h1>
+        <h1 class="mt-5 text-center">To-Do List</h1>
         <form method="POST" action="/add">
+            <p class="text-mute">To Do Başlığı</p>
+
             <div class=" mb-3">
-                <input type="text" class="form-control" name="title" placeholder="To-Do Başlığı Giriniz..." required>
+                <input type="text" class="form-control" name="title" placeholder="To-Do Giriniz..." required>
                 <hr>
                 <!--
                 <input type="text" class="form-control mb-3" name="complete" placeholder="To-Do Açıklaması Giriniz..."
@@ -27,6 +29,35 @@
             </div>
         </form>
 
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">To-Do Başlık</th>
+                    <th scope="col">To-Do Durum</th>
+                    <th scope="col">Durum Güncelle</th>
+                    <th scope="col">To-Do Sil
+                    <th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todos %}
+                <tr>
+                    <th scope="row">{{todo.id}}</th>
+                    <td>{{todo.title}}</td>
+                    {% if todo.complete == False %}
+                    <td>Tamamlanmadı ❌</td>
+                    {% else %}
+                    <td>Tamamlandı ✅</td>
+                    {% endif %}
+                    <td><a href="/complete/{{todo.id}}" class="btn btn-success">Tamamla</a></td>
+                    <td><a href="/delete/{{todo.id}}" class="btn btn-success">Sil</a></td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
     </div>
 
 
