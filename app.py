@@ -19,7 +19,7 @@ def index():
     todos = ToDo.query.all() # Fetch all todos from the database
     return render_template('index.html', todos=todos)
 
-
+#============================ Add ============================
 @app.route('/add', methods=['POST'])
 def addToDo():
     title = request.form.get('title')
@@ -30,17 +30,18 @@ def addToDo():
 
     return redirect(url_for('index'))
 
-
-@app.route('/delete/<int:todo_id>')
+#============================ Delete ============================
+@app.route('/delete/<string:todo_id>')
 def deleteToDo(todo_id):
     todo = ToDo.query.get(todo_id)
     db.session.delete(todo)
     db.session.commit()
     return redirect(url_for('index'))
 
-@app.route('/complete/<int:todo_id>')
+#============================ Complete ============================
+@app.route('/complete/<string:todo_id>')
 def completeToDo(todo_id):
-    todo = ToDo.query.get(todo_id)
+    todo = ToDo.query.filter_by(id=todo_id).first() # Fetch the todo item by its ID
     todo.complete = not todo.complete # Toggle the complete status
     db.session.commit()
     return redirect(url_for('index'))

@@ -1,79 +1,95 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>To-Do App</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-light">
 
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
 
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <h1 class="card-title text-center mb-4">📝 To-Do List</h1>
 
-    <div class="container">
-        <h1 class="mt-5 text-center">To-Do List</h1>
-        <form method="POST" action="/add">
-            <p class="text-mute">To Do Başlığı</p>
+                        <form method="POST" action="/add">
+                            <label class="form-label fw-bold">Yeni To-Do Başlığı</label>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="title" placeholder="To-Do giriniz..." required>
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="bi bi-plus-circle"></i> Ekle
+                                </button>
+                            </div>
+                        </form>
 
-            <div class=" mb-3">
-                <input type="text" class="form-control" name="title" placeholder="To-Do Giriniz..." required>
-                <hr>
-                <!--
-                <input type="text" class="form-control mb-3" name="complete" placeholder="To-Do Açıklaması Giriniz..."
-                    required>
-                -->
-                <button class="btn btn-primary" type="submit">Ekle</button>
+                        {% if todos == [] %}
+                        <div class="alert alert-warning text-center" role="alert">
+                            To-Do listeniz şu an boş 📭
+                        </div>
+                        {% else %}
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Başlık</th>
+                                        <th scope="col">Durum</th>
+                                        <th scope="col">Güncelle</th>
+                                        <th scope="col">Sil</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for todo in todos %}
+                                    <tr>
+                                        <th scope="row">{{todo.id}}</th>
+                                        <td>{{todo.title}}</td>
+                                        <td>
+                                            {% if not todo.complete %}
+                                            <span class="badge bg-danger">Tamamlanmadı ❌</span>
+                                            {% else %}
+                                            <span class="badge bg-success">Tamamlandı ✅</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="/complete/{{todo.id}}" class="btn btn-outline-success btn-sm">
+                                                <i class="bi bi-check2-circle"></i> Tamamla
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="/delete/{{todo.id}}" class="btn btn-outline-danger btn-sm">
+                                                <i class="bi bi-trash3"></i> Sil
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
             </div>
-        </form>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">To-Do Başlık</th>
-                    <th scope="col">To-Do Durum</th>
-                    <th scope="col">Durum Güncelle</th>
-                    <th scope="col">To-Do Sil
-                    <th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {% for todo in todos %}
-                <tr>
-                    <th scope="row">{{todo.id}}</th>
-                    <td>{{todo.title}}</td>
-                    {% if todo.complete == False %}
-                    <td>Tamamlanmadı ❌</td>
-                    {% else %}
-                    <td>Tamamlandı ✅</td>
-                    {% endif %}
-                    <td><a href="/complete/{{todo.id}}" class="btn btn-success">Tamamla</a></td>
-                    <td><a href="/delete/{{todo.id}}" class="btn btn-success">Sil</a></td>
-
-                </tr>
-                {% endfor %}
-
-            </tbody>
+        </div>
     </div>
 
+    <footer class="bg-light text-center text-muted py-4 mt-5 border-top">
+        <p class="mb-0">
+            Developed by 
+            <a href="https://www.linkedin.com/in/erkanturgut1205" target="_blank" rel="noopener" class="text-decoration-none fw-semibold">
+                Erkan TURGUT
+            </a>
+        </p>
+    </footer>
 
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.min.js"
-        integrity="sha384-RuyvpeZCxMJCqVUGFI0Do1mQrods/hhxYlcVfGPOfQtPJh0JCw12tUAZ/Mv10S7D"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
